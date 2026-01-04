@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838950360256",
+    "project_id": "smart-news-engine",
+    "storage_bucket": "smart-news-engine.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838950360256:android:963986bc69782169ce4925",
+        "android_client_info": {
+          "package_name": "com.example.make"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFi9HTY6gp47kyJ5LYRm__Lx3pwLGdJ28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+name: Intelligent News Crawler
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+
+jobs:
+  analyze-and-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        cd news_crawler
+        pip install -r requirements.txt
+
+    - name: Run News & Calendar & Economic Indicators Crawler
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+      run: |
+        python news_crawler/main.py
