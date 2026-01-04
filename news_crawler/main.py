@@ -111,15 +111,9 @@ def initialize_services():
     if api_key:
         try:
             genai.configure(api_key=api_key)
-            # Try gemini-pro first (most stable for v1beta)
-            try:
-                model = genai.GenerativeModel('gemini-pro')
-                logger.info("✅ Gemini API configured successfully (gemini-pro)")
-            except Exception as model_error:
-                # Fallback to gemini-1.5-flash
-                logger.warning(f"gemini-pro failed: {model_error}, trying gemini-1.5-flash")
-                model = genai.GenerativeModel('gemini-1.5-flash')
-                logger.info("✅ Gemini API configured successfully (gemini-1.5-flash)")
+            # v1beta에서 가장 호환성이 좋은 모델명으로 고정
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            logger.info("✅ Gemini API configured successfully (gemini-1.5-flash)")
         except Exception as e:
             logger.error(f"Gemini configuration failed: {e}")
             model = None
