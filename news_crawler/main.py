@@ -111,9 +111,13 @@ def initialize_services():
     if api_key:
         try:
             genai.configure(api_key=api_key)
-            # v1beta에서 가장 호환성이 좋은 모델명으로 고정
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            logger.info("✅ Gemini API configured successfully (gemini-1.5-flash)")
+            # v1beta에서 모델을 찾지 못하는 문제 해결을 위해 models/ 접두사 사용 시도
+            try:
+                model = genai.GenerativeModel('gemini-1.5-flash')
+                logger.info("✅ Gemini API configured successfully (gemini-1.5-flash)")
+            except Exception:
+                model = genai.GenerativeModel('models/gemini-1.5-flash')
+                logger.info("✅ Gemini API configured successfully (models/gemini-1.5-flash)")
         except Exception as e:
             logger.error(f"Gemini configuration failed: {e}")
             model = None

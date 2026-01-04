@@ -115,16 +115,17 @@ def fetch_ecos_data(stat_code, item_code, cycle="D", days=10):
     
     if cycle == "M":
         # 월간 데이터: 1년치
-        start_date = end_date - timedelta(days=365)
+        # 월간 데이터는 YYYYMM 형식 (최근 2개월치 조회)
+        start_str = (now - timedelta(days=60)).strftime("%Y%m")
+        end_str = now.strftime("%Y%m")
     elif cycle == "Q":
-        # 분기 데이터: 2년치
-        start_date = end_date - timedelta(days=730)
-    else:
-        # 일간 데이터
-        start_date = end_date - timedelta(days=days)
-    
-    start_str = start_date.strftime("%Y%m%d")
-    end_str = end_date.strftime("%Y%m%d")
+        # 분기 데이터는 YYYYMMDD 형식 (최근 2년치 조회)
+        start_str = (now - timedelta(days=730)).strftime("%Y%m%d")
+        end_str = now.strftime("%Y%m%d")
+    else: # cycle == "D"
+        # 일간 데이터는 YYYYMMDD 형식 (최근 days일치 조회)
+        start_str = (now - timedelta(days=days)).strftime("%Y%m%d")
+        end_str = now.strftime("%Y%m%d")
     
     # API URL 구성
     url = f"{BASE_URL}/{ECOS_API_KEY}/json/kr/1/50/{stat_code}/{cycle}/{start_str}/{end_str}/{item_code}"
